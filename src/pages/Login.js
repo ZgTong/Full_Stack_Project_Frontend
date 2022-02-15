@@ -1,17 +1,24 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { useNavigate } from "react-router-dom"
+
 
 export default function Login() {
-    const [ username, setUsername ] = useState("")
-    const [ password, setPassword ] = useState("")
-
-    const login = ()=>{
+    const [username, setUsername] = useState("")
+    const [password, setPassword] = useState("")
+    const navigate = useNavigate()
+    const login = () => {
         const data = {
             username,
             password
         }
-        axios.post("http://localhost:3301/auth/login",data).then((res)=>{
+        axios.post("http://localhost:3301/auth/login", data).then((res) => {
             console.log(res.data)
+            if (res.data.error) alert(res.data.error)
+            else {
+                sessionStorage.setItem("accessToken", res.data)
+                navigate('/')
+            }
         })
     }
     return (
