@@ -22,7 +22,7 @@ function Home() {
             }
         ).then((res) => {
             setListOfPost(listOfPosts.map((post) => {
-                if (post.id === postId) {
+                if (post.id === postId) { 
                     if (res.data.liked) return {...post, Likes: [...post.Likes, 0]}
                     else {
                         const likesArr = post.Likes
