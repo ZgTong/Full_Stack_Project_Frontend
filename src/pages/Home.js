@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from "axios"
 import { useEffect, useState, useContext } from "react"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { Authcontext } from "../helpers/AuthContext"
 function Home() {
     const [listOfPosts, setListOfPost] = useState([])
@@ -55,9 +55,9 @@ function Home() {
                         <div className="title">{value.title}</div>
                         <div className="body" onClick={() => { navigate(`/post/${value.id}`) }}>{value.postText}</div>
                         <div className="footer">
-                            {value.username}
+                            <Link to={`/profile/${value.id}`}>{value.username}</Link>
                             <button onClick={() => {
-                                likeAPost(value.id)
+                                likeAPost(value.UserId)
                             }}> Like </button>
                             <label>{value.Likes.length}</label>
                         </div>
