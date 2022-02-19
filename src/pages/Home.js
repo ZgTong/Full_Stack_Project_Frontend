@@ -1,15 +1,27 @@
 import React from 'react'
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
 import { useNavigate } from "react-router-dom"
+import { Authcontext } from "../helpers/AuthContext"
 function Home() {
     const [listOfPosts, setListOfPost] = useState([])
     const navigate = useNavigate()
+    const { authState } = useContext(Authcontext)
     useEffect(() => {
-        axios.get("http://localhost:3301/posts").then((response) => {
-            console.log(response.data)
-            setListOfPost(response.data)
-        })
+        if (!localStorage.getItem("accessToken")) {
+            navigate("/login")
+        } else {
+            axios.get(
+                "http://localhost:3301/posts", {
+                headers: {
+                    accessToken: localStorage.getItem("accessToken")
+                }
+            }
+            ).then((response) => {
+                console.log(response.data)
+                setListOfPost(response.data)
+            })
+        }
     }, [])
     const likeAPost = (postId) => {
         axios.post(
@@ -22,12 +34,12 @@ function Home() {
             }
         ).then((res) => {
             setListOfPost(listOfPosts.map((post) => {
-                if (post.id === postId) { 
-                    if (res.data.liked) return {...post, Likes: [...post.Likes, 0]}
+                if (post.id === postId) {
+                    if (res.data.liked) return { ...post, Likes: [...post.Likes, 0] }
                     else {
                         const likesArr = post.Likes
                         likesArr.pop()
-                        return {...post, Likes: likesArr}
+                        return { ...post, Likes: likesArr }
                     }
                 } else {
                     return post

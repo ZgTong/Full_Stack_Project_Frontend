@@ -3,12 +3,14 @@ import PropTypes from 'prop-types'
 import { useParams } from "react-router-dom"
 import axios from "axios"
 import { Authcontext } from "../helpers/AuthContext"
+import { useNavigate } from "react-router-dom"
 function Post(props) {
     let { id } = useParams()
     const [postObject, setPostObject] = useState({})
     const [comments, setComments] = useState([])
     const [newComment, setNewComment] = useState("")
     const { authState } = useContext(Authcontext)
+    const navigate = useNavigate()
     useEffect(() => {
         axios.get(`http://localhost:3301/posts/byId/${id}`).then((response) => {
 
@@ -36,8 +38,8 @@ function Post(props) {
             if (res.data.error) {
                 console.log(res.data.error)
             } else {
-                const commentToAdd = { 
-                    commentBody: res.data.commentBody, 
+                const commentToAdd = {
+                    commentBody: res.data.commentBody,
                     username: res.data.username,
                     id: res.data.id
                 }
@@ -62,12 +64,34 @@ function Post(props) {
             }))
         })
     }
+
+    const deletePost = (id) => {
+        axios.delete(
+            `http://localhost:3301/posts/${id}`,
+            {
+                headers: {
+                    accessToken: localStorage.getItem("accessToken")
+                }
+            }
+        ).then(() => {
+            console.log("delete successfully")
+            navigate("/")
+        })
+    }
+
     return (
         <div>
             <div className="leftSide">
                 <div>{postObject.title}</div>
                 <div>{postObject.postText}</div>
-                <div>{postObject.username}</div>
+                <div>
+                    {postObject.username}
+                    {
+                        authState.username === postObject.username && (
+                            <button onClick={() => { deletePost(postObject.id) }}> Delete </button>
+                        )
+                    }
+                </div>
             </div>
             <div className="rightSide">
                 <div className="addCommentContainer">
@@ -82,7 +106,7 @@ function Post(props) {
                                 <label>Author: {comment.username}</label>
                                 {
                                     authState.username === comment.username && (
-                                        <button onClick={()=>{deleteComment(comment.id)}}> X</button>
+                                        <button onClick={() => { deleteComment(comment.id) }}> X</button>
                                     )
 
                                 }

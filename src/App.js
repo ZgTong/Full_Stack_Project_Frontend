@@ -11,35 +11,35 @@ import { useState, useEffect } from "react"
 import axios from 'axios';
 function App() {
   const [authState, setAuthState] = useState({
-    username:"",
-    id:0,
-    status:false
+    username: "",
+    id: 0,
+    status: false
   })
   useEffect(() => {
 
-    axios.get("http://localhost:3301/auth/auth",{
-      headers:{
+    axios.get("http://localhost:3301/auth/auth", {
+      headers: {
         accessToken: localStorage.getItem("accessToken")
       }
-    }).then((res)=>{
+    }).then((res) => {
       if (res.data.error) setAuthState({
         ...authState,
-        status:false
+        status: false
       })
       else setAuthState({
         username: res.data.username,
         id: res.data.id,
-        status:true
+        status: true
       })
     })
   }, [])
 
-  const logout = () =>{
+  const logout = () => {
     localStorage.removeItem("accessToken")
     setAuthState({
-      username:"",
-      id:0,
-      status:false
+      username: "",
+      id: 0,
+      status: false
     })
   }
 
@@ -47,8 +47,7 @@ function App() {
     <div className="App">
       <Authcontext.Provider value={{ authState, setAuthState }}>
         <BrowserRouter>
-          <Link to="createpost">Add a post </Link>
-          <Link to="/">Home </Link>
+
           {
             !authState.status ? (
               <>
@@ -56,9 +55,15 @@ function App() {
                 <Link to="/registration">Registration </Link>
               </>
             ) :
-            (
-              <button onClick={logout}>Logout</button>
-            )
+              (
+                <>                  
+                  <Link to="createpost">Add a post </Link>
+                  <Link to="/">Home </Link>
+                  <button onClick={logout}>Logout</button>
+                </>
+
+              )
+
           }
           <h3>{authState.username}</h3>
           <Routes>
