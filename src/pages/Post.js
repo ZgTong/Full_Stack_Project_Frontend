@@ -12,19 +12,19 @@ function Post(props) {
     const { authState } = useContext(Authcontext)
     const navigate = useNavigate()
     useEffect(() => {
-        axios.get(`http://tzg-first-full-stack-api.herokuapp.com/posts/byId/${id}`).then((response) => {
+        axios.get(`https://tzg-first-full-stack-api.herokuapp.com/posts/byId/${id}`).then((response) => {
 
             setPostObject(response.data)
         })
 
-        axios.get(`http://tzg-first-full-stack-api.herokuapp.com/comments/${id}`).then((response) => {
+        axios.get(`https://tzg-first-full-stack-api.herokuapp.com/comments/${id}`).then((response) => {
             setComments(response.data)
         })
     }, [])
 
     const addComment = () => {
         axios.post(
-            `http://tzg-first-full-stack-api.herokuapp.com/comments`,
+            `https://tzg-first-full-stack-api.herokuapp.com/comments`,
             {
                 commentBody: newComment,
                 PostId: id
@@ -52,7 +52,7 @@ function Post(props) {
 
     const deleteComment = (id) => {
         axios.delete(
-            `http://tzg-first-full-stack-api.herokuapp.com/comments/${id}`,
+            `https://tzg-first-full-stack-api.herokuapp.com/comments/${id}`,
             {
                 headers: {
                     accessToken: localStorage.getItem("accessToken")
@@ -67,7 +67,7 @@ function Post(props) {
 
     const deletePost = (id) => {
         axios.delete(
-            `http://tzg-first-full-stack-api.herokuapp.com/posts/${id}`,
+            `https://tzg-first-full-stack-api.herokuapp.com/posts/${id}`,
             {
                 headers: {
                     accessToken: localStorage.getItem("accessToken")

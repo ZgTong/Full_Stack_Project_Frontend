@@ -12,7 +12,7 @@ export default function Registration() {
     }
     const onSubmit = (data) => {
         console.log(data)
-        axios.post("http://tzg-first-full-stack-api.herokuapp.com/auth", data).then((response) => {
+        axios.post("https://tzg-first-full-stack-api.herokuapp.com/auth", data).then((response) => {
             console.log(response)
         })
     }

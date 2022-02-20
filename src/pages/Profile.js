@@ -9,12 +9,12 @@ export default function Profile() {
     const [listOfPostsById, setlistOfPostsById] = useState([])
     useEffect(() => {
         axios.get(
-            `http://tzg-first-full-stack-api.herokuapp.com/auth/basicinfo/${id}`
+            `https://tzg-first-full-stack-api.herokuapp.com/auth/basicinfo/${id}`
         ).then((response) => {
             setUsername(response.data.username)
         })
         axios.get(
-            `http://tzg-first-full-stack-api.herokuapp.com/posts/byuid/${id}`
+            `https://tzg-first-full-stack-api.herokuapp.com/posts/byuid/${id}`
         ).then((response) => {
             setlistOfPostsById(response.data)
         })
