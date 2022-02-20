@@ -19,7 +19,7 @@ function CreatePost(props) {
     const onSubmit = (data) => {
         console.log(data)
         axios.post(
-            "http://localhost:3301/posts",
+            "http://tzg-first-full-stack-api.herokuapp.com/posts",
             data,
             {
                 headers: {

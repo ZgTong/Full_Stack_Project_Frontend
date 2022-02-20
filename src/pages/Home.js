@@ -12,7 +12,7 @@ function Home() {
             navigate("/login")
         } else {
             axios.get(
-                "http://localhost:3301/posts", {
+                "http://tzg-first-full-stack-api.herokuapp.com/posts", {
                 headers: {
                     accessToken: localStorage.getItem("accessToken")
                 }
@@ -25,7 +25,7 @@ function Home() {
     }, [])
     const likeAPost = (postId) => {
         axios.post(
-            `http://localhost:3301/likes`,
+            `http://tzg-first-full-stack-api.herokuapp.com/likes`,
             { PostId: postId },
             {
                 headers: {

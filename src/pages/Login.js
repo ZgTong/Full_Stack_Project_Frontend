@@ -13,7 +13,7 @@ export default function Login() {
             username,
             password
         }
-        axios.post("http://localhost:3301/auth/login", data).then((res) => {
+        axios.post("http://tzg-first-full-stack-api.herokuapp.com/auth/login", data).then((res) => {
             console.log(res.data)
             if (res.data.error) alert(res.data.error)
             else {

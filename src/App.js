@@ -18,7 +18,7 @@ function App() {
   })
   useEffect(() => {
 
-    axios.get("http://localhost:3301/auth/auth", {
+    axios.get("http://tzg-first-full-stack-api.herokuapp.com/auth/auth", {
       headers: {
         accessToken: localStorage.getItem("accessToken")
       }
