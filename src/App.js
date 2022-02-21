@@ -8,7 +8,7 @@ import Registration from "./pages/Registration"
 import PageNotFound from "./pages/PageNotFound"
 import Profile from "./pages/Profile"
 import { Authcontext } from "../src/helpers/AuthContext"
-import { useState, useEffect } from "react"
+import { useState, useEffect } from "react" 
 import axios from 'axios';
 function App() {
   const [authState, setAuthState] = useState({
