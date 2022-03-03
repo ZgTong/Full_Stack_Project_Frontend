@@ -10,7 +10,11 @@ import Profile from "./pages/Profile"
 import { Authcontext } from "../src/helpers/AuthContext"
 import { useState, useEffect } from "react" 
 import axios from 'axios';
+import 'antd/dist/antd.css';
+import { Menu } from 'antd';
+import { LogoutOutlined, LoginOutlined, PlusOutlined, HomeOutlined, CodeOutlined } from '@ant-design/icons';
 function App() {
+  const [navigation,setNavigation] = useState("home")
   const [authState, setAuthState] = useState({
     username: "",
     id: 0,
@@ -44,28 +48,44 @@ function App() {
     })
   }
 
+  const handleClick = (e) => {
+    console.log('click ', e)
+    setNavigation(e.key)
+  };
+
   return (
     <div className="App">
+      
       <Authcontext.Provider value={{ authState, setAuthState }}>
+          
         <BrowserRouter>
-
-          {
-            !authState.status ? (
-              <>
-                <Link to="/login">Login </Link>
-                <Link to="/registration">Registration </Link>
-              </>
-            ) :
-              (
-                <>                  
-                  <Link to="createpost">Add a post </Link>
-                  <Link to="/">Home </Link>
-                  <button onClick={logout}>Logout</button>
+          <Menu onClick={handleClick} selectedKeys={[navigation]} mode="horizontal">            
+            {              
+              !authState.status ? (
+                <>
+                  <Menu.Item key="login" icon={<LoginOutlined />}>
+                    <Link to="/login">Login </Link>
+                  </Menu.Item>
+                  <Menu.Item key="registration" icon={<CodeOutlined />}>
+                    <Link to="/registration">Registration </Link>
+                  </Menu.Item>
                 </>
-
-              )
-
-          }
+              ) :
+                (
+                  <>                  
+                    <Menu.Item key="createpost" icon={<PlusOutlined />} >
+                      <Link to="/createpost">Add a post </Link>      
+                    </Menu.Item>
+                    <Menu.Item key="home" icon={<HomeOutlined />}>
+                      <Link to="/">Home </Link>
+                    </Menu.Item>
+                    <Menu.Item key="logout" onClick={logout} icon={<LogoutOutlined />}>
+                      Logout
+                    </Menu.Item>
+                  </>
+                )
+            }
+          </Menu> 
           <h3>{authState.username}</h3>
           <Routes>
             <Route path="/" exact element={<Home />} />
@@ -82,5 +102,5 @@ function App() {
     </div>
   );
 }
-
 export default App;
+
