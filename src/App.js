@@ -11,7 +11,7 @@ import { Authcontext } from "../src/helpers/AuthContext"
 import { useState, useEffect } from "react" 
 import axios from 'axios';
 import 'antd/dist/antd.css';
-import { Menu } from 'antd';
+import { Menu, PageHeader  } from 'antd';
 import { LogoutOutlined, LoginOutlined, PlusOutlined, HomeOutlined, CodeOutlined } from '@ant-design/icons';
 function App() {
   const [navigation,setNavigation] = useState("home")
@@ -86,7 +86,11 @@ function App() {
                 )
             }
           </Menu> 
-          <h3>{authState.username}</h3>
+          <PageHeader
+            className="site-page-header"
+            title={`User name: ${authState.username}`}
+            subTitle="Start your social life now!"
+          />,
           <Routes>
             <Route path="/" exact element={<Home />} />
             <Route path="/createpost" exact element={<CreatePost />} />
